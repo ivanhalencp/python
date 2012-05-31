@@ -1,13 +1,14 @@
 import threading
 import time
 
-__author__="IvoX(ivanhaleh@gmail.com)"
+__author__="ICP(ivanhaleh@gmail.com)"
 __date__ ="$02-may-2012 17:12:56$"
 
 class XTimer():
-    def __init__(self, time, onTimer, count = -1):
+    def __init__(self, time, onTimer, params = None, count = -1):
         self.time = time
         self.onTimer = onTimer
+        self.params = params
         self.count = count
         self.counter = 0
         self.init()
@@ -39,7 +40,10 @@ class XTimer():
         while (self.state == "running"):
             time.sleep(self.time)
             if (self.state == "running"):
-                self.onTimer()
+                if (self.params != None):
+                    self.onTimer(self.params)
+                else:
+                    self.onTimer()
                 self.counter += 1
                 if (self.count > 0 and self.counter >= self.count):
                     self.counter = 0
